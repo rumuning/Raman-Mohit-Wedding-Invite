@@ -188,11 +188,17 @@
   .story{background:var(--cream-warm)}
   .story .title{font-family:'Parisienne',cursive;font-size:2.5rem;color:var(--ink);margin-bottom:1.6rem}
   .carousel{position:relative;width:min(100%,340px);aspect-ratio:3/4;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 16px 36px rgba(90,15,28,.22)}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:flex-end;justify-content:center;padding:1.4rem;color:#fff}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:flex-end;justify-content:center;padding:1.4rem;color:#fff;background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;}
   .slide.active{opacity:1}
   .slide span{font-family:'Parisienne',cursive;font-size:1.5rem;text-shadow:0 2px 12px rgba(0,0,0,.6);position:relative;z-index:2}
   .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(42,6,12,.7))}
-  .s1{background:linear-gradient(135deg,#7a1626,#c98a63)
+  .s1{
+  background-image:url("where-it-began.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
   }
   .s2{background:linear-gradient(135deg,#5a0f1c,#a4586a)}
   .s3{background:linear-gradient(135deg,#8a3b2a,#e0b98a)}
@@ -342,7 +348,7 @@ two hearts, one journey, and a promise to walk through life together.</p>
         <div class="title">Moments, softly held</div>
         <div class="carousel" id="carousel">
           <div class="slide s1 active"><span>Where it began</span></div>
-          <!-- <div class="slide s2"><span>A promise in henna</span></div> -->
+          <div class="slide s2"><span>A promise in henna</span></div>
           <div class="slide s3"><span>Hand in hand, always</span></div>
         </div>
         <div class="dots" id="dots">
