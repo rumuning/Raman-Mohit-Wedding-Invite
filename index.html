@@ -165,7 +165,7 @@
   .date-sec{background:var(--blush)}
   .date-sec .title{font-family:'Parisienne',cursive;font-size:2.4rem;color:var(--ink);margin:.3rem 0 1.4rem}
   .scratch-shell{
-    position:relative;width:min(100%,360px);aspect-ratio:16/9;margin:0 auto;
+    position:relative;width:min(100%,360px);aspect-ratio:3/4;margin:0 auto;
     border-radius:8px;overflow:hidden;
     box-shadow:0 18px 40px rgba(90,15,28,.25);
   }
@@ -187,8 +187,83 @@
   /* story */
   .story{background:var(--cream-warm)}
   .story .title{font-family:'Parisienne',cursive;font-size:2.5rem;color:var(--ink);margin-bottom:1.6rem}
-  .carousel{position:relative;width:min(100%,340px);aspect-ratio:3/4;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 16px 36px rgba(90,15,28,.22)}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:flex-end;justify-content:center;padding:1.4rem;color:#fff;background-size:cover;
+  .carousel {
+  position: relative;
+  width: min(100%, 340px);
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(90,15,28,.22);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.8s ease,
+    visibility 0.8s ease;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  color: white;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  display: block;
+}
+
+/* Dark gradient at bottom so the caption is readable */
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    rgba(30, 5, 10, 0.7) 100%
+  );
+
+  z-index: 1;
+}
+
+.slide span {
+  position: relative;
+  z-index: 2;
+
+  margin-bottom: 25px;
+
+  font-family: 'Parisienne', cursive;
+  font-size: 1.5rem;
+
+  color: white;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.7);
+}
+  /* .carousel{position:relative;width:min(100%,340px);aspect-ratio:3/4;margin:0 auto;border-radius:8px;overflow:hidden;box-shadow:0 16px 36px rgba(90,15,28,.22)} */
+  /* .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:flex-end;justify-content:center;padding:1.4rem;color:#fff;background-size:cover;
   background-position:center;
   background-repeat:no-repeat;}
   .slide.active{opacity:1}
@@ -345,11 +420,30 @@ two hearts, one journey, and a promise to walk through life together.</p>
       <div class="wrap">
         <p class="label">Our story</p>
         <div class="title">Moments, softly held</div>
-        <div class="carousel" id="carousel">
-          <div class="slide s1 active"><span>Where it began</span></div>
-          <div class="slide s2"><span>A promise in henna</span></div>
-          <div class="slide s3"><span>Hand in hand, always</span></div>
-        </div>
+  <div class="carousel" id="carousel">
+
+  <div class="slide active">
+    <img src="./image1.jpeg" alt="Our story">
+    <span>Where it began</span>
+  </div>
+
+  <div class="slide">
+    <img src="./image2.jpeg" alt="Our story">
+    <span>And then there was us</span>
+  </div>
+
+  <div class="slide">
+    <img src="./image3.jpeg" alt="Our story">
+    <span>Hand in hand, always</span>
+  </div>
+
+</div>
+
+<div class="dots" id="dots">
+  <i class="on" data-i="0"></i>
+  <i data-i="1"></i>
+  <i data-i="2"></i>
+</div>
         <div class="dots" id="dots">
           <i class="on" data-i="0"></i><i data-i="1"></i><i data-i="2"></i>
         </div>
@@ -517,18 +611,39 @@ two hearts, one journey, and a promise to walk through life together.</p>
   })();
 
   /* ---------- carousel ---------- */
-  (function(){
-    const slides=[...document.querySelectorAll('.slide')];
-    const dots=[...document.querySelectorAll('#dots i')];
-    let i=0;
-    function go(n){
-      slides[i].classList.remove('active');dots[i].classList.remove('on');
-      i=(n+slides.length)%slides.length;
-      slides[i].classList.add('active');dots[i].classList.add('on');
-    }
-    dots.forEach(d=>d.addEventListener('click',()=>go(+d.dataset.i)));
-    setInterval(()=>go(i+1),3800);
-  })();
+  const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('#dots i');
+
+let currentSlide = 0;
+
+function showSlide(index) {
+
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('on', i === index);
+  });
+
+  currentSlide = index;
+}
+
+/* Click the dots */
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    showSlide(index);
+  });
+});
+
+/* Automatically change image */
+setInterval(() => {
+
+  let nextSlide = (currentSlide + 1) % slides.length;
+
+  showSlide(nextSlide);
+
+}, 4000);
 
   /* ---------- countdown ---------- */
   (function(){
